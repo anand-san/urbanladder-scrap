@@ -1,6 +1,6 @@
 import React from 'react'
 import CustomLoader from './CustomLoader'
-export default function L_Loader(props) {
+export default function LucidLoader(props) {
 	return (
 		<div className="fadeInUp">
 			<div style={{display:"flex", justifyContent: "center", marginTop: 20}}>

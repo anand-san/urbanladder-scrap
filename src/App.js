@@ -9,8 +9,10 @@ import CustomAd from "./Components/CustomAd";
 import Container from "@material-ui/core/Container";
 import Header from "./Components/Header";
 import { FetchData } from "./data-access/request-layer";
-import L_Loader from "./Components/Loader";
+import LucidLoader from "./Components/Loader";
 import InlineError from "./Components/InlineErrorBoundary";
+import {sort_by_key} from "./Utils/utilityFunctions"
+
 import "./App.css";
 
 function App() {
@@ -20,38 +22,93 @@ function App() {
   const [productsData, setProductsData] = React.useState();
   const [currentViewItems, setCurrentViewItems] = React.useState([]);
   const [tabValue, setTabValue] = React.useState(0);
-  const [componentDataLoading, setComponentDataLoading] = React.useState(false)
+  const [componentDataLoading, setComponentDataLoading] = React.useState(false);
+  const [sortType, setSortType] = React.useState(0);
+  const sortByCategory = (category) => {
+    let sortedArr = currentViewItems
+    switch (category) {
+      case 0:
+        setCurrentViewItems(productsData[navigationBarData[tabValue]])
+        break
+      case 1:
+        sortedArr = sort_by_key(currentViewItems, "Price")
+        sortedArr.splice(0, 1, sortedArr.pop())
+        setCurrentViewItems(sortedArr)
+        break
+      case 2:
+        sortedArr = sort_by_key(currentViewItems, "Price")
+        sortedArr.reverse()
+        sortedArr.push(sortedArr.shift())
+        setCurrentViewItems(sortedArr)
+        break
+      case 3:
+        sortedArr = sort_by_key(currentViewItems, "Rating")
+        setCurrentViewItems(sortedArr)
+        break
+      case 4:
+        sortedArr = sort_by_key(currentViewItems, "Rating")
+        sortedArr.reverse()
+        setCurrentViewItems(sortedArr)
+        break
+      default:
+        return;
+    }
+  };
+
+  const searchByName = (query) => {
+    if (!query.target.value)
+      setCurrentViewItems(productsData[navigationBarData[tabValue]]);
+    setCurrentViewItems(
+      navigationBarData.reduce((a, c) => {
+        let results = productsData[c].reduce((a1, c1) => {
+          if (c1.Name.toLowerCase().includes(query.target.value)) a1.push(c1);
+          return a1;
+        }, []);
+        console.log(a);
+        a = [...a, ...results];
+        return a;
+      }, [])
+    );
+  };
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
-    setComponentDataLoading(true)
+    setSortType(0)
+    setComponentDataLoading(true);
     setTimeout(() => {
-      setCurrentViewItems(productsData[navigationBarData[newValue]])
-      setComponentDataLoading(false)
-    }, 1000)
+      setCurrentViewItems(productsData[navigationBarData[newValue]]);
+      setComponentDataLoading(false);
+    }, 1000);
   };
 
   React.useEffect(() => {
     FetchData()
       .then((data) => {
-        let types = Object.keys(data)
+        let types = Object.keys(data);
         setNavigationBarData(types);
         setProductsData(data);
-        setCurrentViewItems(data[types[tabValue]])
+        setCurrentViewItems(data[types[tabValue]]);
       })
       .catch((e) => setIsError(e.message || e))
       .finally(() => {
         setIsLoading(false);
       });
-  }, [setIsLoading, setCurrentViewItems, setProductsData, setNavigationBarData]);
+  }, [
+    setIsLoading,
+    setCurrentViewItems,
+    setProductsData,
+    setNavigationBarData,
+    setTabValue
+  ]);
 
-  if (isLoading) return <L_Loader />;
+  if (isLoading) return <LucidLoader />;
 
   if (isError) return <InlineError error={isError} />;
 
   return (
     <Container maxWidth="lg">
       <Header
+        searchByName={searchByName}
         navigationBarData={navigationBarData}
         productsData={productsData}
         currentViewItems={currentViewItems}
@@ -79,31 +136,41 @@ function App() {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={null}
-              onChange={console.log}
+              value={sortType}
+              onChange={(e) => {
+                setSortType(e.target.value);
+                sortByCategory(e.target.value);
+              }}
               fullWidth
             >
-              <MenuItem value={10}>Price - Low to High</MenuItem>
-              <MenuItem value={20}>Price - High to Low</MenuItem>
-              <MenuItem value={30}>Rating - Top</MenuItem>
-              <MenuItem value={30}>Rating - Low</MenuItem>
+              <MenuItem value={0}>None</MenuItem>
+              <MenuItem value={1}>Price - Low to High</MenuItem>
+              <MenuItem value={2}>Price - High to Low</MenuItem>
+              <MenuItem value={3}>Rating - Low to High</MenuItem>
+              <MenuItem value={4}>Rating - High to Low</MenuItem>
             </Select>
           </FormControl>
         </Grid>
       </Grid>
-     
-        {!componentDataLoading ?  <Grid container spacing={2} className="fadeInUp">
+
+      {!componentDataLoading ? (
+        <div container spacing={2} className="fadeInUp" style={{display: "flex", justifyContent: "center", flexWrap: "wrap"}}>
           {currentViewItems.map((e) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-            <ProductCard
-              title={e.Name}
-              subTitle={e.Description}
-              price={e.Price.replace(/,/g, "").replace(/₹/g, "")}
-              subNote={e.Emi}
-              image={e.Image}
-            />
-          </Grid>
-        ))}</Grid> : <L_Loader />}
+            <div item xs={12} sm={6} md={4} lg={3} xl={2}>
+              <ProductCard
+                title={e.Name}
+                subTitle={e.Description}
+                price={e.Price}
+                subNote={e.Emi}
+                image={e.Image}
+                rating={e.Rating}
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <LucidLoader />
+      )}
     </Container>
   );
 }

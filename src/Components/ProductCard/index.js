@@ -3,6 +3,7 @@ import Paper from "@material-ui/core/Paper";
 import CardImage from "./CardImage";
 import { numberWithCommas } from "../../Utils/utilityFunctions";
 import Button from "@material-ui/core/Button";
+import Rating from '@material-ui/lab/Rating';
 
 export default function ProductCard(props) {
   const classes = useStyles();
@@ -11,7 +12,7 @@ export default function ProductCard(props) {
     <div className={classes.root}>
       <Paper elevation={3} className={classes.paper}>
         <div>
-          <CardImage src={props.image} />
+          <CardImage src={props.image === "https://www.ulcdn.net/assets/spree/frontend/icons/loader-f40db8b3a97fef2e139c0fa9b0de17fc.gif" ? "https://i0.wp.com/www.omantripper.com/wp-content/plugins/penci-portfolio//images/no-thumbnail.jpg" : props.image} />
         </div>
         <div className={classes.infoSection}>
           <span className={classes.cardDescription}>
@@ -26,8 +27,10 @@ export default function ProductCard(props) {
             </span>
             <span className={classes.descriptionNote}>
               {" "}
-              | EMI @ {props.subNote || "1234"}
+              | EMI @ {numberWithCommas(props.subNote) || "NA"}/Month
             </span>
+            <br />
+            <Rating name="read-only" value={props.rating/2} readOnly />
           </span>
           <br />
           <span>
@@ -58,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   paper: {
-    width: 275,
+    width: 300,
     height: "auto",
   },
   cardDescription: {

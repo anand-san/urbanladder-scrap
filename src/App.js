@@ -61,7 +61,7 @@ function App() {
     setCurrentViewItems(
       navigationBarData.reduce((a, c) => {
         let results = productsData[c].reduce((a1, c1) => {
-          if (c1.Name.toLowerCase().includes(query.target.value)) a1.push(c1);
+          if (c1.Name.toLowerCase().includes(query.target.value.toLowerCase())) a1.push(c1);
           return a1;
         }, []);
         console.log(a);

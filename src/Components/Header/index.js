@@ -11,7 +11,6 @@ import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { makeStyles } from "@material-ui/core/styles";
 export default function Header(props) {
   const classes = useStyles();
-    console.log(props.tabValue)
   return (
     <>
       {/* <Grid container spacing={0}></Grid> */}
@@ -20,7 +19,7 @@ export default function Header(props) {
           <img alt="main_logo" src="/logo_main.png" width="200px" />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={6} className={classes.searchbar}>
-          <TextField fullWidth label="Search" />
+          <TextField onChange={props.searchByName} fullWidth label="Search" />
         </Grid>
         <Grid item xs={12} sm={6} md={3} lg={3} className={classes.headerIcons}>
           <CommuteIcon className="headerIcon" />
@@ -36,7 +35,9 @@ export default function Header(props) {
             onChange={props.handleTabChange}
             indicatorColor="primary"
             textColor="primary"
-            centered
+            // centered
+            variant="scrollable"
+            scrollButtons="on"
           >
             {props.navigationBarData.map((e) => (
               <Tab label={e} />

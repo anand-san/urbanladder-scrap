@@ -23,7 +23,7 @@ export default function ProductCard(props) {
               ({props.subTitle || "Sub Title"})
             </span>
             <span className={classes.descriptionPrice}>
-              ₹{numberWithCommas(props.price) || numberWithCommas("5000")}
+              ₹{numberWithCommas(props.price) || numberWithCommas("0")}
             </span>
             <span className={classes.descriptionNote}>
               {" "}

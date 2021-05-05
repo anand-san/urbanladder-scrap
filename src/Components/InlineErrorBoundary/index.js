@@ -3,7 +3,7 @@ export default function InlineError(props) {
   return (
     <div className="fadeInUp">
       <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
-        <img src="/logo_main.png" alt="mainlogo" />
+        <img src="https://raw.githubusercontent.com/seanjin17/lucidity-coding1/main/public/logo_main.png" alt="mainlogo" />
       </div>{" "}
       <div style={{ textAlign: "center" }}>
         <h2>Oops! Something went wrong</h2>

@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/lucidity-coding1/static/css/main.aec3a58d.chunk.css",
-    "main.js": "/lucidity-coding1/static/js/main.549a8038.chunk.js",
-    "main.js.map": "/lucidity-coding1/static/js/main.549a8038.chunk.js.map",
+    "main.js": "/lucidity-coding1/static/js/main.7b858c46.chunk.js",
+    "main.js.map": "/lucidity-coding1/static/js/main.7b858c46.chunk.js.map",
     "runtime-main.js": "/lucidity-coding1/static/js/runtime-main.5d44ab5b.js",
     "runtime-main.js.map": "/lucidity-coding1/static/js/runtime-main.5d44ab5b.js.map",
     "static/js/2.c5ed1988.chunk.js": "/lucidity-coding1/static/js/2.c5ed1988.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.5d44ab5b.js",
     "static/js/2.c5ed1988.chunk.js",
     "static/css/main.aec3a58d.chunk.css",
-    "static/js/main.549a8038.chunk.js"
+    "static/js/main.7b858c46.chunk.js"
   ]
 }

@@ -16,7 +16,7 @@ export default function Header(props) {
       {/* <Grid container spacing={0}></Grid> */}
       <Grid container spacing={0}>
         <Grid item xs={12} sm={12} md={5} lg={3} className={classes.mainLogo}>
-          <img alt="main_logo" src="/logo_main.png" width="200px" />
+          <img alt="main_logo" src="https://raw.githubusercontent.com/seanjin17/lucidity-coding1/main/public/logo_main.png" width="200px" />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={6} className={classes.searchbar}>
           <TextField onChange={props.searchByName} fullWidth label="Search" />

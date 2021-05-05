@@ -12,7 +12,7 @@ export const FetchData = () => {
     return api({
       method: "post",
       headers: "",
-      url: "ebb080ec-6afc-42f3-a69a-1f6ab954cdec",
+      url: "2f721130-6c45-4937-aa1f-2e60d91db130",
       data: {},
     })
       .then((response) => {
